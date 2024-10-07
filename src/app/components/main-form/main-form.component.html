@@ -1,0 +1,35 @@
+<form class="main-form" [formGroup]="formGroup">
+  <div class="main-form__header">
+    <ng-container *ngIf="formGroup.enabled">
+      <button  class="btn btn-primary" (click)="onSubmit()" type="submit" [disabled]="isDisabled">Submit all forms</button>
+      <div *ngIf="errorsCount" class="text-danger">Invalid forms: {{errorsCount}}</div>
+    </ng-container>
+
+    <ng-container *ngIf="formGroup.disabled">
+      <button class="btn btn-danger" (click)="onCancel()" type="button">Cancel</button>
+      <span class="text-secondary">0:0{{timer$ | async}}</span>
+    </ng-container>
+  </div>
+
+  <div formArrayName="formGroupArray" class="main-form__grid">
+    <ng-container *ngFor="let formGroup of formGroupList; let i = index">
+      <app-form-item
+        [formGroup]="formGroup"
+        [index]="i"
+        (delete)="onDeleteFormGroup($event)"
+      ></app-form-item>
+    </ng-container>
+
+    <button *ngIf="formGroupList.length < 10"
+            class="main-form__add-button"
+            type="button"
+            (click)="addFormItem()"
+            [disabled]="formGroup.disabled"
+    >
+      <div class="main-form__add-button-container">
+        <img width="28" height="28" ngSrc="./assets/icons/plus.svg" alt="plus">
+      </div>
+    </button>
+  </div>
+</form>
+

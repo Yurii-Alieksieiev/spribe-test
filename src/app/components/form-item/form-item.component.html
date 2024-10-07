@@ -1,0 +1,61 @@
+<form class="form-item" [formGroup]="formGroup">
+  <button type="button" class="delete-button" [disabled]="formGroup.disabled" (click)="onDeleteClick()">
+    <img width="12" height="12" ngSrc="./assets/icons/cross.svg" alt="cross">
+  </button>
+
+  <div class="form-group">
+    <!-- unique id need for correct label behavior -->
+    <label [for]="'country' + index">Country</label>
+    <div (clickOutside)="closeDropdown()">
+      <input [controlName]="'Country'"
+             [id]="'country' + index"
+             formControlName="country"
+             type="text"
+             class="form-control"
+             autocomplete="off"
+             appCheckValidity>
+
+      <div *ngIf="showDropdown" class="dropdown">
+        <div *ngFor="let option of searchedOptions"
+             (click)="setSelectedOption(option)"
+             class="dropdown__option">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label [for]="'username' + index">Username</label>
+    <input [controlName]="'Username'"
+           [id]="'username' + index"
+           formControlName="username"
+           type="text"
+           class="form-control"
+           appCheckValidity
+           autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <label [for]="'birthday' + index">Birthday</label>
+
+    <div class="input-group">
+      <input #birthdayDatepicker="ngbDatepicker"
+             class="form-control datepicker-input"
+             [placeholder]="'dd.mm.yyyy'"
+             formControlName="birthday"
+             ngbDatepicker
+             appCheckValidity
+             autocomplete="off"
+             [controlName]="'Birthday'"
+             [id]="'birthday' + index">
+
+      <button class="btn btn-outline-secondary datepicker-button"
+              [disabled]="formGroup.disabled"
+              (click)="birthdayDatepicker.toggle()"
+              type="button">
+        <img width="16" height="16" ngSrc="./assets/icons/calendar.svg" alt="calendar">
+      </button>
+    </div>
+  </div>
+</form>
